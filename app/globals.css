@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
 /* Single source of truth for the site's accent color — change --color-accent
-   here (and optionally --color-accent-hover) to re-theme every link at once. */
+   here (and optionally --color-accent-hover) to re-theme every link at once.
+   Currently a monochrome palette (after the classic Poole/Hyde academic
+   style): links are nearly the same charcoal as body text, darkening to
+   near-black on hover instead of taking on a separate color.
+   --color-neutral-900 is also overridden so headings/body text share that
+   same warm charcoal instead of Tailwind's cooler default black. */
 @theme {
-  --color-accent: #0f766e;
-  --color-accent-hover: #115e59;
+  --color-accent: #343434;
+  --color-accent-hover: #010101;
+  --color-neutral-900: #333332;
 }
 
 :root {
@@ -17,6 +23,7 @@ html {
 }
 
 body {
+  background: #fbfbfd;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   text-rendering: optimizeLegibility;
@@ -26,11 +33,17 @@ a {
   color: var(--color-accent);
   text-underline-offset: 2px;
 }
+/* Scoped to <main> so it only affects content links (publications, press,
+   etc.) and doesn't fight the NavBar's active-page highlight or Sidebar
+   links, which manage their own color via Tailwind classes. */
+main a:visited {
+  color: #676767;
+}
 a:hover {
   color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
 ::selection {
-  background: #ccfbf1;
+  background: #e8e8ed;
 }

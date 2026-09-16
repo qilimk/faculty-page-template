@@ -31,12 +31,12 @@ export default function PubList() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search title, author, venue…"
-          className="w-full rounded-md border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-slate-900 sm:max-w-xs"
+          className="w-full rounded-md border border-neutral-300 px-3 py-1.5 text-sm outline-none focus:border-neutral-900 sm:max-w-xs"
         />
         <select
           value={tag}
           onChange={(e) => setTag(e.target.value)}
-          className="rounded-md border border-slate-300 px-2 py-1.5 text-sm text-slate-700 outline-none focus:border-slate-900"
+          className="rounded-md border border-neutral-300 px-2 py-1.5 text-sm text-neutral-700 outline-none focus:border-neutral-900"
         >
           <option value="">All topics</option>
           {tags.map((t) => (
@@ -47,17 +47,17 @@ export default function PubList() {
         </select>
       </div>
 
-      <ul className="mt-6 divide-y divide-slate-100">
+      <ul className="mt-6 divide-y divide-neutral-100">
         {filtered.map((p, i) => (
           <li key={i} className="py-4 first:pt-0">
             <div className="flex flex-wrap items-baseline gap-x-2">
-              <h2 className="text-[15px] font-semibold text-slate-900">
+              <h2 className="text-[15px] font-semibold text-neutral-900">
                 {p.title}
               </h2>
-              <span className="text-sm text-slate-400">{p.year}</span>
+              <span className="text-sm text-neutral-400">{p.year}</span>
             </div>
-            <p className="mt-1 text-sm text-slate-600">{p.authors}</p>
-            <p className="text-sm italic text-slate-500">{p.venue}</p>
+            <p className="mt-1 text-sm text-neutral-600">{p.authors}</p>
+            <p className="text-sm italic text-neutral-500">{p.venue}</p>
             {(p.links?.pdf || p.links?.code) && (
               <div className="mt-1.5 flex gap-3 text-sm">
                 {p.links?.pdf && (
@@ -85,7 +85,7 @@ export default function PubList() {
           </li>
         ))}
         {filtered.length === 0 && (
-          <li className="py-4 text-sm text-slate-500">
+          <li className="py-4 text-sm text-neutral-500">
             No matching publications.
           </li>
         )}

@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
-      <body className="bg-white text-slate-900 antialiased">
+      <body className="text-neutral-900 antialiased">
         <div id="top" />
         <div className="mx-auto max-w-5xl px-5 sm:px-6">
           <NavBar />

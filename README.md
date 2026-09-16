@@ -57,11 +57,16 @@ under `app/` with a `page.tsx`, plus a matching entry in the `items` array in
 
 ### Colors
 
-The accent color (links, hover states) is one CSS variable —
-`--color-accent` (and `--color-accent-hover`) in `app/globals.css`. Change
-those two hex values to make the site your own; every link updates at once.
-Everything else uses the Tailwind `slate` gray scale (`text-slate-900`,
-`border-slate-200`, etc.) throughout the components.
+Ships with a monochrome, editorial palette (after the classic Poole/Hyde
+academic style): links (`#343434`) are barely darker than body text
+(`#333332`), darken to near-black (`#010101`) on hover, and show as `#676767`
+once visited within the page content. Background is off-white (`#fbfbfd`).
+All of that lives in `app/globals.css` — `--color-accent` /
+`--color-accent-hover` in the `@theme` block, the `--color-neutral-900`
+override right under it, the `body { background }` rule, and the
+`main a:visited` rule — change those to make the site your own. Everything
+else uses the Tailwind `neutral` gray scale (`text-neutral-900`,
+`border-neutral-200`, etc.) throughout the components.
 
 ## Local development
 
