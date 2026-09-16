@@ -55,6 +55,14 @@ Adding a whole new page (e.g. a blog or a new section) means adding a folder
 under `app/` with a `page.tsx`, plus a matching entry in the `items` array in
 `components/NavBar.tsx`.
 
+### Colors
+
+The accent color (links, hover states) is one CSS variable —
+`--color-accent` (and `--color-accent-hover`) in `app/globals.css`. Change
+those two hex values to make the site your own; every link updates at once.
+Everything else uses the Tailwind `slate` gray scale (`text-slate-900`,
+`border-slate-200`, etc.) throughout the components.
+
 ## Local development
 
 ```bash

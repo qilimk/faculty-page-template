@@ -13,10 +13,10 @@ type Talk = { date: string; title: string };
 type Press = { year: string | number; outlet: string; title: string; link?: string };
 
 const sectionLabel =
-  "text-[13px] font-semibold uppercase tracking-[0.08em] text-gray-400";
+  "text-[13px] font-semibold uppercase tracking-[0.08em] text-slate-400";
 const row =
-  "flex flex-col gap-0.5 text-[15px] leading-7 text-gray-700 sm:flex-row sm:gap-4";
-const rowKey = "shrink-0 text-gray-400 sm:w-24";
+  "flex flex-col gap-0.5 text-[15px] leading-7 text-slate-700 sm:flex-row sm:gap-4";
+const rowKey = "shrink-0 text-slate-400 sm:w-24";
 
 const toYearNum = (y: string | number) =>
   Number(String(y).match(/\d{4}/)?.[0] ?? -1);
@@ -51,17 +51,17 @@ export default function RecognitionPage() {
   return (
     <div className="space-y-12">
       <section>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
           Recognition
         </h1>
         <nav className="mt-3 flex gap-4 text-sm">
-          <a href="#awards" className="text-blue-700 hover:underline">
+          <a href="#awards" className="text-accent hover:underline">
             Awards
           </a>
-          <a href="#talks" className="text-blue-700 hover:underline">
+          <a href="#talks" className="text-accent hover:underline">
             Talks
           </a>
-          <a href="#press" className="text-blue-700 hover:underline">
+          <a href="#press" className="text-accent hover:underline">
             Press
           </a>
         </nav>
@@ -98,11 +98,11 @@ export default function RecognitionPage() {
             <li key={i} className={row}>
               <span className={rowKey}>{p.year}</span>
               <span>
-                <span className="font-medium text-gray-900">{p.outlet}</span>
+                <span className="font-medium text-slate-900">{p.outlet}</span>
                 {" — "}
                 {p.link ? (
                   <a
-                    className="text-blue-700 hover:underline"
+                    className="text-accent hover:underline"
                     href={p.link}
                     target="_blank"
                     rel="noreferrer"

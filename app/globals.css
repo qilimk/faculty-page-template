@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
+/* Single source of truth for the site's accent color — change --color-accent
+   here (and optionally --color-accent-hover) to re-theme every link at once. */
 @theme {
-  --color-accent: #1d4ed8;
+  --color-accent: #0f766e;
+  --color-accent-hover: #115e59;
 }
 
 :root {
@@ -24,9 +27,10 @@ a {
   text-underline-offset: 2px;
 }
 a:hover {
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
 ::selection {
-  background: #dbeafe;
+  background: #ccfbf1;
 }

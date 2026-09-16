@@ -22,15 +22,15 @@ export default function Sidebar() {
         alt={profile.name}
         width={150}
         height={150}
-        className="rounded-lg border border-gray-200 object-cover"
+        className="rounded-lg border border-slate-200 object-cover"
         priority
       />
 
       <div>
-        <p className="text-lg font-semibold tracking-tight text-gray-900">
+        <p className="text-lg font-semibold tracking-tight text-slate-900">
           {profile.name}
         </p>
-        <p className="mt-1 text-sm leading-6 text-gray-500">
+        <p className="mt-1 text-sm leading-6 text-slate-500">
           {profile.title}
           <br />
           {profile.dept}
@@ -50,7 +50,7 @@ export default function Sidebar() {
               <a
                 href={withBasePath(href)}
                 {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-                className="text-blue-700 hover:underline"
+                className="text-accent hover:underline"
               >
                 {label}
               </a>
