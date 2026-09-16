@@ -1,36 +1,30 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { withBasePath } from "@/lib/basePath";
 
-// Content lives in Markdown files (content/*.md), which are only readable
-// via Node's `fs` — that only works in Server Components, so the parent
-// layout loads it and passes down exactly what this client component needs.
-export default function NavBar({ name, cvHref }: { name: string; cvHref: string }) {
-  const pathname = usePathname();
+const items = [
+  { href: "#about", label: "About" },
+  { href: "#updates", label: "Updates" },
+  { href: "#teaching", label: "Teaching" },
+  { href: "#publications", label: "Publications" },
+  { href: "#group", label: "Group" },
+  { href: "#experiences", label: "Experiences" },
+  { href: "#recognition", label: "Recognition" },
+  { href: "#cv", label: "CV" },
+];
+
+// Single-page site: every nav item is a same-page #anchor link (no routing),
+// so this only needs the mobile menu's open/closed state.
+export default function NavBar({ name }: { name: string }) {
   const [open, setOpen] = useState(false);
-
-  const items = [
-    { href: "/", label: "About" },
-    { href: "/publications", label: "Publications" },
-    { href: "/group", label: "Group" },
-    { href: "/experiences", label: "Experiences" },
-    { href: "/recognition", label: "Recognition" },
-    ...(cvHref ? [{ href: cvHref, label: "CV", external: true }] : []),
-  ];
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <header className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 py-5">
-      <Link
-        href="/"
+      <a
+        href="#top"
         className="text-base font-semibold tracking-tight text-neutral-900 no-underline"
       >
         {name}
-      </Link>
+      </a>
 
       <button
         className="rounded-md border border-neutral-300 px-2.5 py-1 text-sm text-neutral-600 sm:hidden"
@@ -45,31 +39,16 @@ export default function NavBar({ name, cvHref }: { name: string; cvHref: string 
         id="primary-nav"
         className={`${open ? "block" : "hidden"} w-full sm:block sm:w-auto`}
       >
-        <ul className="flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:gap-6 sm:pt-0">
+        <ul className="flex flex-col gap-3 pt-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2 sm:pt-0">
           {items.map((i) => (
             <li key={i.href}>
-              {i.external ? (
-                <a
-                  href={withBasePath(i.href)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm text-neutral-500 no-underline hover:text-accent"
-                >
-                  {i.label}
-                </a>
-              ) : (
-                <Link
-                  href={i.href}
-                  onClick={() => setOpen(false)}
-                  className={`text-sm no-underline transition-colors hover:text-accent ${
-                    isActive(i.href)
-                      ? "font-semibold text-neutral-900"
-                      : "text-neutral-500"
-                  }`}
-                >
-                  {i.label}
-                </Link>
-              )}
+              <a
+                href={i.href}
+                onClick={() => setOpen(false)}
+                className="text-sm text-neutral-500 no-underline transition-colors hover:text-accent"
+              >
+                {i.label}
+              </a>
             </li>
           ))}
         </ul>

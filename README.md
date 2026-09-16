@@ -1,13 +1,14 @@
 # Faculty page template
 
-A one-person academic website: Next.js + Tailwind, all content in plain
-Markdown files, deployed for free as a static site on GitHub Pages via GitHub
-Actions. No database, no CMS — edit a `.md` file, push, and the site rebuilds
-itself.
+A one-person academic website: a single scrolling page (no tabs/routing) —
+About, Updates, Teaching, Publications, Group, Experiences, Recognition, CV —
+built with Next.js + Tailwind, all content in plain Markdown files, deployed
+for free as a static site on GitHub Pages via GitHub Actions. No database, no
+CMS — edit a `.md` file, push, and the site rebuilds itself.
 
 This is the template. For a filled-in example, see the
-[`qili-prof`](../qili-prof) repo, which was built from this same template
-(qili-prof currently still uses the older JSON format — content-wise the two
+[`qili-prof`](../qili-prof) repo, which was built from an earlier version of
+this template (it still uses the older multi-page / JSON format — the two
 repos have since diverged, but the rest of the setup is the same).
 
 ## Set up your own copy
@@ -24,8 +25,9 @@ repos have since diverged, but the rest of the setup is the same).
    update the `src` in `components/Sidebar.tsx` (replace
    `/avatar-placeholder.svg`).
 5. **Add your CV**: drop the PDF in `public/` and set `content/links.md`'s
-   `cv` field to `/your-cv-filename.pdf`. Leave it as `""` to hide the CV
-   link entirely.
+   `cv` field to `/your-cv-filename.pdf`. Leave it as `""` and the CV section
+   shows setup instructions instead of a download button, and the sidebar
+   link is hidden.
 6. **Enable GitHub Pages**: in your repo, go to **Settings → Pages → Source:
    GitHub Actions**. That's it — the included workflow
    (`.github/workflows/deploy.yml`) builds and deploys on every push to
@@ -35,10 +37,12 @@ repos have since diverged, but the rest of the setup is the same).
 
 ## Editing content
 
-Every page reads from a Markdown file in `content/`. Each file starts with a
+The whole site is one page (`app/page.tsx`), made of `<section id="...">`
+blocks the nav bar links to with `#anchor` hrefs — no separate routes. Each
+section reads from a Markdown file in `content/`. Every file starts with a
 `---`-fenced **frontmatter** block (structured fields, written in YAML) and,
 for `about.md` only, a **body** below it — real Markdown prose (bold,
-italics, links, lists) that renders on the About page.
+italics, links, lists) that renders in the About section.
 
 Edit the file, commit, and push to `main` — the site rebuilds and redeploys
 automatically. YAML is more forgiving than JSON: no trailing-comma errors,
@@ -46,26 +50,30 @@ no escaping quotes, and you can add `#` comments.
 
 | File | Powers | Shape |
 |---|---|---|
-| `content/about.md` | Name/title, sidebar info, site `<title>`, and the About page bio | frontmatter: `{ name, title, dept, university, office, email, phone, description }`; body: your bio in Markdown |
-| `content/links.md` | Sidebar links + nav CV link | frontmatter only: `{ cv, scholar, github, linkedin, x, email }` — set any value to `""` to hide that link |
-| `content/updates.md` | Home page "Updates" list | `items:` list of `{ date, text }`, newest first |
-| `content/teaching.md` | Home page "Teaching" list | `items:` list of `{ term, title, link }` |
-| `content/publications.md` | `/publications` (searchable/filterable) | `items:` list of `{ title, authors, venue, year, links: { pdf, code }, tags: [] }` |
-| `content/group.md` | `/group` | `items:` list of `{ name, role, site }` |
-| `content/experiences.md` | `/experiences` | `items:` list of `{ year, text }` |
-| `content/awards.md` | `/recognition` → Awards | `items:` list of `{ year, text }` |
-| `content/talks.md` | `/recognition` → Talks | `items:` list of `{ date, title }` |
-| `content/press.md` | `/recognition` → Press | `items:` list of `{ year, outlet, title, link }` |
+| `content/about.md` | Name/title, sidebar info, site `<title>`, and the About section bio | frontmatter: `{ name, title, dept, university, office, email, phone, description }`; body: your bio in Markdown |
+| `content/links.md` | Sidebar links + CV section download button | frontmatter only: `{ cv, scholar, github, linkedin, x, email }` — set any value to `""` to hide that link (an empty `cv` shows setup instructions instead of a broken button) |
+| `content/updates.md` | Updates section | `items:` list of `{ date, text }`, newest first |
+| `content/teaching.md` | Teaching section | `items:` list of `{ term, title, link }` |
+| `content/publications.md` | Publications section (searchable/filterable) | `items:` list of `{ title, authors, venue, year, links: { pdf, code }, tags: [] }` |
+| `content/group.md` | Group section | `items:` list of `{ name, role, site }` |
+| `content/experiences.md` | Experiences section | `items:` list of `{ year, text }` |
+| `content/awards.md` | Recognition section → Awards | `items:` list of `{ year, text }` |
+| `content/talks.md` | Recognition section → Talks | `items:` list of `{ date, title }` |
+| `content/press.md` | Recognition section → Press | `items:` list of `{ year, outlet, title, link }` |
 
 To add a new item to any list, add a new `- ` block under that file's
-`items:` key — pages that are sorted (Recognition, Publications) re-sort
+`items:` key — sections that are sorted (Recognition, Publications) re-sort
 automatically. Dates/years in YAML should stay quoted (`"2026-01-01"`, not
 `2026-01-01`) so they're read as text, not auto-converted to a date type.
 
-Adding a whole new page (e.g. a blog or a new section) means adding a folder
-under `app/` with a `page.tsx` that reads a new `content/*.md` file via
-`lib/content.ts`, plus a matching entry in the `items` array in
-`components/NavBar.tsx`.
+**Your CV** is a section (with a "Download CV (PDF)" button), not a page —
+drop the PDF in `public/` and set `content/links.md`'s `cv` field to
+`/your-cv-filename.pdf`.
+
+To add a whole new section: add a `<section id="your-id">` in `app/page.tsx`
+(reading a new `content/*.md` file via `lib/content.ts` if it needs its own
+content), plus a matching `{ href: "#your-id", label: "..." }` entry in the
+`items` array in `components/NavBar.tsx`.
 
 ### Colors
 
@@ -99,14 +107,17 @@ npx serve out
 
 ## How this is built
 
+- A single route (`app/page.tsx`) — no tabs, no client-side routing. The nav
+  bar and the sub-nav inside the Recognition section are just `#anchor`
+  links that scroll the one page.
 - Next.js App Router, static-exported (`output: "export"` in
   `next.config.ts`) — no server required.
 - Content is Markdown + YAML frontmatter in `content/`, parsed at build time
   by `lib/content.ts` (using `gray-matter`) and rendered with
   `react-markdown` where it's prose (the About bio). Reading `content/` uses
-  Node's `fs`, so it only happens in Server Components — the two
-  interactive pieces (`NavBar`, `PubList`) receive their data as props from
-  a Server Component parent instead of reading files themselves.
+  Node's `fs`, so it only happens in Server Components — `PubList` (the one
+  interactive piece, with client-side search/filter) receives its data as a
+  prop from `app/page.tsx` instead of reading files itself.
 - `lib/basePath.ts` + the `NEXT_PUBLIC_BASE_PATH` env var handle serving the
   site from a GitHub Pages project subpath; the deploy workflow sets it
   automatically from the repo name.

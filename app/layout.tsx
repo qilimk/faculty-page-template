@@ -6,10 +6,9 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import Sidebar from "@/components/Sidebar";
 import { loadContent } from "@/lib/content";
-import type { Profile, Links } from "@/types/content";
+import type { Profile } from "@/types/content";
 
 const { data: profile } = loadContent<Profile>("about.md");
-const { data: links } = loadContent<Links>("links.md");
 
 export const metadata: Metadata = {
   title: `${profile.name} — ${profile.university}`,
@@ -24,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="text-neutral-900 antialiased">
         <div id="top" />
         <div className="mx-auto max-w-5xl px-5 sm:px-6">
-          <NavBar name={profile.name} cvHref={links.cv} />
+          <NavBar name={profile.name} />
 
           <div className="grid grid-cols-1 gap-10 py-10 sm:grid-cols-[210px_minmax(0,1fr)] sm:gap-12 lg:gap-16">
             <aside className="self-start sm:sticky sm:top-8">
