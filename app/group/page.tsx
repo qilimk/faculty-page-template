@@ -1,6 +1,9 @@
-import group from "@/data/group.json";
+import { loadItems } from "@/lib/content";
+import type { GroupMember } from "@/types/content";
 
 export default function GroupPage() {
+  const group = loadItems<GroupMember>("group.md");
+
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tight text-neutral-900">

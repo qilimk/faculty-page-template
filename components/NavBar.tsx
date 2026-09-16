@@ -2,22 +2,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import profile from "@/data/profile.json";
-import links from "@/data/links.json";
 import { withBasePath } from "@/lib/basePath";
 
-const items = [
-  { href: "/", label: "About" },
-  { href: "/publications", label: "Publications" },
-  { href: "/group", label: "Group" },
-  { href: "/experiences", label: "Experiences" },
-  { href: "/recognition", label: "Recognition" },
-  ...(links.cv ? [{ href: links.cv, label: "CV", external: true }] : []),
-];
-
-export default function NavBar() {
+// Content lives in Markdown files (content/*.md), which are only readable
+// via Node's `fs` — that only works in Server Components, so the parent
+// layout loads it and passes down exactly what this client component needs.
+export default function NavBar({ name, cvHref }: { name: string; cvHref: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const items = [
+    { href: "/", label: "About" },
+    { href: "/publications", label: "Publications" },
+    { href: "/group", label: "Group" },
+    { href: "/experiences", label: "Experiences" },
+    { href: "/recognition", label: "Recognition" },
+    ...(cvHref ? [{ href: cvHref, label: "CV", external: true }] : []),
+  ];
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -28,7 +29,7 @@ export default function NavBar() {
         href="/"
         className="text-base font-semibold tracking-tight text-neutral-900 no-underline"
       >
-        {profile.name}
+        {name}
       </Link>
 
       <button

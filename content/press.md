@@ -1,0 +1,7 @@
+---
+items:
+  - year: "2026"
+    outlet: "Example Outlet"
+    title: "Example press mention title"
+    link: ""
+---

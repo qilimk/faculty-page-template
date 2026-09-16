@@ -1,9 +1,9 @@
 import Image from "next/image";
-import profile from "@/data/profile.json";
-import links from "@/data/links.json";
+import { loadContent } from "@/lib/content";
+import type { Profile, Links } from "@/types/content";
 import { withBasePath } from "@/lib/basePath";
 
-type LinkKey = keyof typeof links;
+type LinkKey = keyof Links;
 
 const social: { key: LinkKey; label: string; external?: boolean }[] = [
   { key: "cv", label: "Curriculum Vitae", external: true },
@@ -15,6 +15,9 @@ const social: { key: LinkKey; label: string; external?: boolean }[] = [
 ];
 
 export default function Sidebar() {
+  const { data: profile } = loadContent<Profile>("about.md");
+  const { data: links } = loadContent<Links>("links.md");
+
   return (
     <div className="space-y-5">
       <Image

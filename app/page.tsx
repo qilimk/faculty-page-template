@@ -1,19 +1,23 @@
 // app/page.tsx
-import profile from "@/data/profile.json";
-import updates from "@/data/updates.json";
-import teaching from "@/data/teaching.json";
+import ReactMarkdown from "react-markdown";
+import { loadContent, loadItems } from "@/lib/content";
+import type { Profile, Update, TeachingItem } from "@/types/content";
 
 const sectionLabel =
   "text-[13px] font-semibold uppercase tracking-[0.08em] text-neutral-400";
 
 export default function HomePage() {
+  const { body: bio } = loadContent<Profile>("about.md");
+  const updates = loadItems<Update>("updates.md");
+  const teaching = loadItems<TeachingItem>("teaching.md");
+
   return (
     <div className="space-y-12">
       <section id="about">
         <h1 className="text-2xl font-bold tracking-tight text-neutral-900">About</h1>
-        <p className="mt-4 max-w-prose text-[15px] leading-7 text-neutral-700">
-          {profile.bio}
-        </p>
+        <div className="prose mt-4 max-w-prose text-[15px] leading-7 text-neutral-700">
+          <ReactMarkdown>{bio}</ReactMarkdown>
+        </div>
       </section>
 
       <section id="updates">

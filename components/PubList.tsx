@@ -1,20 +1,26 @@
 "use client";
-import pubsJson from "@/data/publications.json";
 import type { Publication } from "@/types/publication";
 import { useMemo, useState } from "react";
 
-// Normalize once so `links` is always an object, newest first.
-const pubs: Publication[] = (pubsJson as unknown as Publication[])
-  .map((p) => ({ ...p, links: p.links ?? {} }))
-  .sort((a, b) => b.year - a.year);
-
-export default function PubList() {
+// Content lives in content/publications.md, which is only readable via
+// Node's `fs` — that only works in Server Components, so the parent page
+// loads it and passes the list down as a prop.
+export default function PubList({ publications }: { publications: Publication[] }) {
   const [q, setQ] = useState("");
   const [tag, setTag] = useState("");
 
+  // Normalize once so `links` is always an object, newest first.
+  const pubs = useMemo(
+    () =>
+      publications
+        .map((p) => ({ ...p, links: p.links ?? {} }))
+        .sort((a, b) => b.year - a.year),
+    [publications],
+  );
+
   const tags = useMemo(
     () => Array.from(new Set(pubs.flatMap((p) => p.tags || []))).sort(),
-    [],
+    [pubs],
   );
 
   const filtered = pubs.filter((p) => {

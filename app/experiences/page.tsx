@@ -1,6 +1,9 @@
-import exps from "@/data/experiences.json";
+import { loadItems } from "@/lib/content";
+import type { Experience } from "@/types/content";
 
 export default function ExperiencesPage() {
+  const exps = loadItems<Experience>("experiences.md");
+
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tight text-neutral-900">

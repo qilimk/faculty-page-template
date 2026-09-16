@@ -47,3 +47,27 @@ a:hover {
 ::selection {
   background: #e8e8ed;
 }
+
+/* Minimal styling for Markdown bodies rendered via react-markdown
+   (currently just the About bio in content/about.md). */
+.prose p + p {
+  margin-top: 1rem;
+}
+.prose strong {
+  font-weight: 600;
+  color: var(--color-neutral-900);
+}
+.prose ul,
+.prose ol {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.25rem;
+}

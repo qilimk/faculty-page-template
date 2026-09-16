@@ -1,16 +1,12 @@
 // app/recognition/page.tsx
-import awards from "@/data/awards.json";
-import talks from "@/data/talks.json";
-import press from "@/data/press.json";
-import profile from "@/data/profile.json";
+import { loadContent, loadItems } from "@/lib/content";
+import type { Profile, Award, Talk, Press } from "@/types/content";
+
+const { data: profile } = loadContent<Profile>("about.md");
 
 export const metadata = {
   title: `Recognition — ${profile.name}`,
 };
-
-type Award = { year: string | number; text: string };
-type Talk = { date: string; title: string };
-type Press = { year: string | number; outlet: string; title: string; link?: string };
 
 const sectionLabel =
   "text-[13px] font-semibold uppercase tracking-[0.08em] text-neutral-400";
@@ -38,13 +34,17 @@ const toDateKey = (d: string) => {
 };
 
 export default function RecognitionPage() {
-  const awardsSorted = [...(awards as Award[])].sort(
+  const awards = loadItems<Award>("awards.md");
+  const talks = loadItems<Talk>("talks.md");
+  const press = loadItems<Press>("press.md");
+
+  const awardsSorted = [...awards].sort(
     (a, b) => toYearNum(b.year) - toYearNum(a.year),
   );
-  const talksSorted = [...(talks as Talk[])].sort(
+  const talksSorted = [...talks].sort(
     (a, b) => toDateKey(b.date) - toDateKey(a.date),
   );
-  const pressSorted = [...(press as Press[])].sort(
+  const pressSorted = [...press].sort(
     (a, b) => toYearNum(b.year) - toYearNum(a.year),
   );
 

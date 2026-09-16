@@ -1,0 +1,5 @@
+---
+items:
+  - year: "2026"
+    text: "Example Award Name"
+---
