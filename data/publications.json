@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Example Publication Title",
+    "authors": "Doe, J.; Coauthor, A.",
+    "venue": "Example Conference or Journal",
+    "year": 2026,
+    "links": { "pdf": "", "code": "" },
+    "tags": ["Example Tag"]
+  }
+]
